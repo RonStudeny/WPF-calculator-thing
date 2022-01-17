@@ -30,27 +30,32 @@ namespace WpfApp1
             Result.Content = $"= {Calculation()}";
         }
 
+
+
+        #region functions
         private double Calculation()
         {
             string input = Input.Text;
             double res = 0;
+            bool calculate = true;
             HashSet<char> operations = new HashSet<char> { '+', '-', '*', '/'};
             string[] arrLine;
             List<string> Line = new List<string>();
 
-
+            // whitespace removal
             if (input.Contains(" "))
             {
                 for (int i = 0; i < input.Length; i++)
                     if (input[i] == ' ') input = input.Remove(i);
             }
-
+            // number isolation
             for (int i = 0; i < input.Length; i++)
             {
                 if (operations.Contains(input[i]))
                 {
-                    input = input.Insert(--i, " ");
+                    input = input.Insert(i, " ");
                     input = input.Insert(i + 2, " ");
+                    i++;
                 }
             }
 
@@ -58,11 +63,15 @@ namespace WpfApp1
             for (int i = 0; i < arrLine.Length; i++)
                 Line.Add(arrLine[i]);
 
+            // actuall calculation
 
+            while (calculate)
+            {
 
-
+            }
 
             return res;
         }
+        #endregion
     }
 }
