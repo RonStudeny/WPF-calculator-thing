@@ -32,8 +32,36 @@ namespace WpfApp1
 
         private double Calculation()
         {
+            string input = Input.Text;
             double res = 0;
-            res = Convert.ToDouble(Input.Text);
+            HashSet<char> operations = new HashSet<char> { '+', '-', '*', '/'};
+            string[] arrLine;
+            List<string> Line = new List<string>();
+
+
+            if (input.Contains(" "))
+            {
+                for (int i = 0; i < input.Length; i++)
+                    if (input[i] == ' ') input = input.Remove(i);
+            }
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (operations.Contains(input[i]))
+                {
+                    input = input.Insert(--i, " ");
+                    input = input.Insert(i + 2, " ");
+                }
+            }
+
+            arrLine = input.Split(' ');
+            for (int i = 0; i < arrLine.Length; i++)
+                Line.Add(arrLine[i]);
+
+
+
+
+
             return res;
         }
     }
