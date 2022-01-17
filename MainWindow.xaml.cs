@@ -40,7 +40,7 @@ namespace WpfApp1
             bool calculate = true;
             HashSet<char> operations = new HashSet<char> { '+', '-', '*', '/'};
             string[] arrLine;
-            List<string> Line = new List<string>();
+            List<string> NumLine = new List<string>();
 
             // whitespace removal
             if (input.Contains(" "))
@@ -61,14 +61,54 @@ namespace WpfApp1
 
             arrLine = input.Split(' ');
             for (int i = 0; i < arrLine.Length; i++)
-                Line.Add(arrLine[i]);
+                NumLine.Add(arrLine[i]);
 
             // actuall calculation
-
+            #region prasarna
             while (calculate)
             {
+                // higher operations
+                bool highPrio = true;
+                if (highPrio == true && NumLine.Contains("*"))  // multiply
+                {
+                    int index = NumLine.IndexOf("*");
+                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) * Convert.ToDouble(NumLine[index + 1])).ToString();
+                    NumLine.RemoveAt(index - 1);
+                    NumLine.RemoveAt(index + 1);
+                }
+                else if (highPrio == true && NumLine.Contains("/")) // divide
+                {
+                    int index = NumLine.IndexOf("/");
+                    try 
+                    {
+                        NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) / Convert.ToDouble(NumLine[index + 1])).ToString();
+                        NumLine.RemoveAt(index - 1);
+                        NumLine.RemoveAt(index + 1);
+                    }
+                    catch { Result.Content = "Cannot divide by zero..."; }                  
+                }
+                else highPrio = false;
 
+                // lower operations
+                if(highPrio == false && NumLine.Contains("+")) // add
+                {
+                    int index = NumLine.IndexOf("+");
+                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) + Convert.ToDouble(NumLine[index + 1])).ToString();
+                    NumLine.RemoveAt(index - 1);
+                    NumLine.RemoveAt(index + 1);
+                }
+                else if (highPrio == false && NumLine.Contains("-")) // add
+                {
+                    int index = NumLine.IndexOf("+");
+                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) - Convert.ToDouble(NumLine[index + 1])).ToString();
+                    NumLine.RemoveAt(index - 1);
+                    NumLine.RemoveAt(index + 1);
+                }
+                else calculate = false;
             }
+            #endregion
+
+            res = Convert.ToDouble(NumLine[0]);
 
             return res;
         }
