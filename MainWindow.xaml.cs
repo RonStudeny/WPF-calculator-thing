@@ -69,42 +69,46 @@ namespace WpfApp1
             {
                 // higher operations
                 bool highPrio = true;
-                if (highPrio == true && NumLine.Contains("*"))  // multiply
+
+                if (highPrio == true && NumLine.Contains("/")) // divide
+                {
+                    int index = NumLine.IndexOf("/");
+                    try
+                    {
+                        NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) / Convert.ToDouble(NumLine[index + 1])).ToString();
+                        NumLine.RemoveAt(index - 1);
+                        NumLine.RemoveAt(index);
+                    }
+                    catch { Result.Content = "Cannot divide by zero..."; }
+                }
+
+                else if (highPrio == true && NumLine.Contains("*"))  // multiply
                 {
                     int index = NumLine.IndexOf("*");
                     NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) * Convert.ToDouble(NumLine[index + 1])).ToString();
                     NumLine.RemoveAt(index - 1);
-                    NumLine.RemoveAt(index + 1);
+                    NumLine.RemoveAt(index);
                 }
-                else if (highPrio == true && NumLine.Contains("/")) // divide
-                {
-                    int index = NumLine.IndexOf("/");
-                    try 
-                    {
-                        NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) / Convert.ToDouble(NumLine[index + 1])).ToString();
-                        NumLine.RemoveAt(index - 1);
-                        NumLine.RemoveAt(index + 1);
-                    }
-                    catch { Result.Content = "Cannot divide by zero..."; }                  
-                }
+
                 else highPrio = false;
 
                 // lower operations
-                if(highPrio == false && NumLine.Contains("+")) // add
+                if (highPrio == false && NumLine.Contains("-")) // substract
+                {
+                    int index = NumLine.IndexOf("-");
+                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) - Convert.ToDouble(NumLine[index + 1])).ToString();
+                    NumLine.RemoveAt(index - 1);
+                    NumLine.RemoveAt(index);
+                }
+                else if (highPrio == false && NumLine.Contains("+")) // add
                 {
                     int index = NumLine.IndexOf("+");
                     NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) + Convert.ToDouble(NumLine[index + 1])).ToString();
                     NumLine.RemoveAt(index - 1);
-                    NumLine.RemoveAt(index + 1);
+                    NumLine.RemoveAt(index);
                 }
-                else if (highPrio == false && NumLine.Contains("-")) // add
-                {
-                    int index = NumLine.IndexOf("+");
-                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) - Convert.ToDouble(NumLine[index + 1])).ToString();
-                    NumLine.RemoveAt(index - 1);
-                    NumLine.RemoveAt(index + 1);
-                }
-                else calculate = false;
+
+                else if (highPrio == false) calculate = false;
             }
             #endregion
 
