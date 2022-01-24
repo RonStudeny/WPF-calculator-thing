@@ -27,7 +27,7 @@ namespace WpfApp1
 
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
-            Result.Content = $"= {Calculation()}";
+            Input.Text = $"= {Calculation()}";
         }
 
 
@@ -79,7 +79,7 @@ namespace WpfApp1
                         NumLine.RemoveAt(index - 1);
                         NumLine.RemoveAt(index);
                     }
-                    catch { Result.Content = "Cannot divide by zero..."; }
+                    catch { Input.Text = "Cannot divide by zero..."; }
                 }
 
                 else if (highPrio == true && NumLine.Contains("*"))  // multiply
