@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="490" Width="550">
+        Title="MainWindow" Height="490" Width="550"
+        Loaded="Window_Loaded" PreviewKeyUp="Window_PreviewKeyUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -17,42 +18,45 @@
 
         <TextBox Name="Input" Grid.Row="0" Grid.Column="0"
                  Height="55" Width="300"
-                 Text="INPUT" FontSize="35" TextAlignment="Center"/>
+                 Text="" FontSize="35" TextAlignment="Center"/>
        
 
         <Button Name="Calculate" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
                 Content="=" FontSize="35" Click="Calculate_Click"
-                Margin="370 250 0 0"/>
+                Margin="370 250 0 0"
+                Focusable="False"/>
 
         <Button Name="Add" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
                 Content="+" FontSize="35"
-                Margin="370 130 0 0"/>
+                Margin="370 130 0 0"
+                Focusable="False" Click="Add_Click"/>
         
         <Button Name="Substract" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
                 Content="-" FontSize="35"
-                Margin="370 10 0 0"/>
+                Margin="370 10 0 0"
+                Focusable="False" Click="Substract_Click"/>
 
         <Button Name="Multiply" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
                 Content="*" FontSize="35"
-                Margin="370 0 0 110"/>
+                Margin="370 0 0 110"
+                Focusable="False" Click="Multiply_Click"/>
 
         <Button Name="Divide" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
                 Content="÷" FontSize="30"
-                Margin="370 0 0 230"/>
+                Margin="370 0 0 230"
+                Focusable="False" Click="Divide_Click"/>
 
-        <Button Name="zero" Grid.Row="1" Grid.Column="0"
-                Height="100" Width="80"
-                Content="0" FontSize="35"
-                Margin="0 200 365 0"/>
+
 
 
         <Grid Grid.Row="1" Grid.Column="0" Height="300" Width="250">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -61,28 +65,35 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+
             </Grid.RowDefinitions>
 
             <Button Name="seven" Grid.Row="0" Grid.Column="0"
-                    Content="7" FontSize="35"/>
+                    Content="7" FontSize="35" Focusable="False" Click="seven_Click"/>
             <Button Name="eight" Grid.Row="0" Grid.Column="1"
-                    Content="8" FontSize="35"/>
+                    Content="8" FontSize="35" Focusable="False" Click="eight_Click"/>
             <Button Name="nine" Grid.Row="0" Grid.Column="2"
-                    Content="9" FontSize="35"/>
+                    Content="9" FontSize="35" Focusable="False" Click="nine_Click"/>
 
             <Button Name="four" Grid.Row="1" Grid.Column="0"
-                    Content="4" FontSize="35"/>
+                    Content="4" FontSize="35" Focusable="False" Click="four_Click"/>
             <Button Name="five" Grid.Row="1" Grid.Column="1"
-                    Content="5" FontSize="35"/>
+                    Content="5" FontSize="35" Focusable="False" Click="five_Click"/>
             <Button Name="six" Grid.Row="1" Grid.Column="2"
-                    Content="6" FontSize="35"/>
+                    Content="6" FontSize="35" Focusable="False" Click="six_Click"/>
 
             <Button Name="one" Grid.Row="2" Grid.Column="0"
-                    Content="1" FontSize="35"/>
+                    Content="1" FontSize="35" Focusable="False" Click="one_Click"/>
             <Button Name="two" Grid.Row="2" Grid.Column="1"
-                    Content="2" FontSize="35"/>
+                    Content="2" FontSize="35" Focusable="False" Click="two_Click"/>
             <Button Name="three" Grid.Row="2" Grid.Column="2"
-                    Content="3" FontSize="35"/>
+                    Content="3" FontSize="35" Focusable="False" Click="three_Click"/>
+
+
+            <Button Name="zero" Grid.Row="2" Grid.Column="3"
+                Content="0" FontSize="35" Focusable="False" Click="zero_Click"/>
+            <Button Name="separator" Grid.Row="1" Grid.Column="3"
+                Content="" FontSize="35" Focusable="False" Click="separator_Click"/>
         </Grid>
 
     </Grid>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace WpfApp1
 {
@@ -20,6 +21,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region init
         public MainWindow()
         {
             InitializeComponent();
@@ -29,14 +31,23 @@ namespace WpfApp1
         {
             Input.Text = $"= {Calculation()}";
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            separator.Content = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            Input.Focus();
+        }
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Input.Text = $"= {Calculation()}";
+        }
 
-
+        #endregion
 
         #region functions
-        private double Calculation()
+        private string Calculation()
         {
             string input = Input.Text;
-            double res = 0;
+            string res = "";
             bool calculate = true;
             HashSet<char> operations = new HashSet<char> { '+', '-', '*', '/'};
             string[] arrLine;
@@ -64,7 +75,7 @@ namespace WpfApp1
                 NumLine.Add(arrLine[i]);
 
             // actuall calculation
-            #region prasarna
+            #region calculation
             while (calculate)
             {
                 // higher operations
@@ -79,15 +90,19 @@ namespace WpfApp1
                         NumLine.RemoveAt(index - 1);
                         NumLine.RemoveAt(index);
                     }
-                    catch { Input.Text = "Cannot divide by zero..."; }
+                    catch { res = "Syntax error"; }
                 }
 
                 else if (highPrio == true && NumLine.Contains("*"))  // multiply
                 {
-                    int index = NumLine.IndexOf("*");
-                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) * Convert.ToDouble(NumLine[index + 1])).ToString();
-                    NumLine.RemoveAt(index - 1);
-                    NumLine.RemoveAt(index);
+                    try
+                    {
+                        int index = NumLine.IndexOf("*");
+                        NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) * Convert.ToDouble(NumLine[index + 1])).ToString();
+                        NumLine.RemoveAt(index - 1);
+                        NumLine.RemoveAt(index);
+                    }
+                    catch { res = "Syntax error"; }
                 }
 
                 else highPrio = false;
@@ -95,27 +110,67 @@ namespace WpfApp1
                 // lower operations
                 if (highPrio == false && NumLine.Contains("-")) // substract
                 {
-                    int index = NumLine.IndexOf("-");
-                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) - Convert.ToDouble(NumLine[index + 1])).ToString();
-                    NumLine.RemoveAt(index - 1);
-                    NumLine.RemoveAt(index);
+                    try
+                    {
+                        int index = NumLine.IndexOf("-");
+                        NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) - Convert.ToDouble(NumLine[index + 1])).ToString();
+                        NumLine.RemoveAt(index - 1);
+                        NumLine.RemoveAt(index);
+                    }
+                    catch { res = "Syntax error"; }
+
                 }
                 else if (highPrio == false && NumLine.Contains("+")) // add
                 {
-                    int index = NumLine.IndexOf("+");
-                    NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) + Convert.ToDouble(NumLine[index + 1])).ToString();
-                    NumLine.RemoveAt(index - 1);
-                    NumLine.RemoveAt(index);
-                }
+                    try
+                    {
+                        int index = NumLine.IndexOf("+");
+                        NumLine[index] = (Convert.ToDouble(NumLine[index - 1]) + Convert.ToDouble(NumLine[index + 1])).ToString();
+                        NumLine.RemoveAt(index - 1);
+                        NumLine.RemoveAt(index);
+                    }
+                    catch { res = "Syntax error"; }
 
+                }
                 else if (highPrio == false) calculate = false;
             }
             #endregion
 
-            res = Convert.ToDouble(NumLine[0]);
-
+            try
+            {
+                Convert.ToDouble(NumLine[0]);
+                res = NumLine[0];
+            }
+            catch { res = "Syntax error"; }         
             return res;
         }
+
+        private void ShowError()
+        {
+
+        }
+
+        #region numpad
+        private void one_Click(object sender, RoutedEventArgs e) => Input.Text += "1";
+        private void two_Click(object sender, RoutedEventArgs e) => Input.Text += "2";
+        private void three_Click(object sender, RoutedEventArgs e) => Input.Text += "3";
+        private void four_Click(object sender, RoutedEventArgs e) => Input.Text += "4";
+        private void five_Click(object sender, RoutedEventArgs e) => Input.Text += "5";
+        private void six_Click(object sender, RoutedEventArgs e) => Input.Text += "6";
+        private void seven_Click(object sender, RoutedEventArgs e) => Input.Text += "7";
+        private void eight_Click(object sender, RoutedEventArgs e) => Input.Text += "8";
+        private void nine_Click(object sender, RoutedEventArgs e) => Input.Text += "9";
+        private void zero_Click(object sender, RoutedEventArgs e) => Input.Text += "0";
+
+        private void Divide_Click(object sender, RoutedEventArgs e) => Input.Text += "/";
+        private void Multiply_Click(object sender, RoutedEventArgs e) => Input.Text += "*";
+        private void Substract_Click(object sender, RoutedEventArgs e) => Input.Text += "-";
+        private void Add_Click(object sender, RoutedEventArgs e) => Input.Text += "+";
+        private void separator_Click(object sender, RoutedEventArgs e) => Input.Text += CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+
+        #endregion
+
         #endregion
     }
 }
