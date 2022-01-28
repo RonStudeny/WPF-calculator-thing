@@ -24,13 +24,14 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.RowDefinitions>
-                
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            
-            
-            <TextBox Name="Input" Grid.Row="0" Grid.Column="0"
+
+
+            <TextBox Name="Input" Grid.Row="1" Grid.Column="0"
                  Height="55" Width="300"
-                 Text="" FontSize="35" TextAlignment="Center"/>
+                 Text="" FontSize="35" TextAlignment="Center" />
         </Grid>
 
        

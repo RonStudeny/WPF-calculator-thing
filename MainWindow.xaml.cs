@@ -21,6 +21,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        HashSet<char> operations = new HashSet<char> { '+', '-', '*', '/' };
         #region init
         public MainWindow()
         {
@@ -49,10 +50,10 @@ namespace WpfApp1
             string input = Input.Text;
             string res = "";
             bool calculate = true;
-            HashSet<char> operations = new HashSet<char> { '+', '-', '*', '/'};
             string[] arrLine;
             List<string> NumLine = new List<string>();
 
+            ErrorCheck();
             // whitespace removal
             if (input.Contains(" "))
             {
@@ -145,7 +146,28 @@ namespace WpfApp1
             return res;
         }
 
-        private void ShowError()
+        private void ErrorCheck()
+        {
+            string input = Input.Text;
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (operations.Contains(input[i]))
+                {
+                    try
+                    {
+                        Convert.ToDouble(input[i - 1]);
+                        Convert.ToDouble(input[i + 1]);
+                    }
+                    catch
+                    {
+                        ShowError(i);
+                        return;
+                    }                                      
+                }
+            }
+        }
+
+        private void ShowError(int index)
         {
 
         }
