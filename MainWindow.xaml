@@ -13,7 +13,7 @@
             <Setter Property="FontSize" Value="35"/>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -30,11 +30,14 @@
 
 
             <TextBox Name="Input" Grid.Row="1" Grid.Column="0"
-                 Height="55" Width="300"
-                 Text="" FontSize="35" TextAlignment="Center" />
+                 Height="55" Width="300" FontFamily="GenericMonospace"
+                 Text="" FontSize="35" Margin="125,15,125,10"/>
+            <TextBox Name="ErrorBox" Grid.Row="0" Grid.Column="0" Width="300"
+                     Text="" FontSize="20" Margin="125,0,125,65" Grid.RowSpan="2"
+                     FontFamily="GenericMonospace"/>
         </Grid>
 
-       
+
 
         <Button Name="Calculate" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
@@ -46,7 +49,7 @@
                 Height="50" Width="80"
                 Content="+" Style="{StaticResource NumpadButton}"
                 Margin="370 130 0 0" Click="Add_Click"/>
-        
+
         <Button Name="Substract" Grid.Row="1" Grid.Column="0"
                 Height="50" Width="80"
                 Content="-" Style="{StaticResource NumpadButton}"
@@ -78,7 +81,7 @@
                 <RowDefinition Height="*"/>
 
             </Grid.RowDefinitions>
-            
+
             <Button Name="seven" Grid.Row="0" Grid.Column="0"
                     Content="7" Style="{StaticResource NumpadButton}" Click="seven_Click"/>
             <Button Name="eight" Grid.Row="0" Grid.Column="1"

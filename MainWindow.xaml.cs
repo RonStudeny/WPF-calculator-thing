@@ -28,10 +28,7 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void Calculate_Click(object sender, RoutedEventArgs e)
-        {
-            Input.Text = $"= {Calculation()}";
-        }
+        private void Calculate_Click(object sender, RoutedEventArgs e) => Input.Text = $"= {Calculation()}";
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             separator.Content = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
@@ -53,7 +50,7 @@ namespace WpfApp1
             string[] arrLine;
             List<string> NumLine = new List<string>();
 
-            ErrorCheck();
+             if (ErrorCheck()) return input;
             // whitespace removal
             if (input.Contains(" "))
             {
@@ -146,7 +143,7 @@ namespace WpfApp1
             return res;
         }
 
-        private void ErrorCheck()
+        private bool ErrorCheck()
         {
             string input = Input.Text;
             for (int i = 0; i < input.Length; i++)
@@ -161,15 +158,22 @@ namespace WpfApp1
                     catch
                     {
                         ShowError(i);
-                        return;
+                        return true;
                     }                                      
                 }
             }
+            return false;
         }
 
         private void ShowError(int index)
         {
-
+            StringBuilder errorLine = new StringBuilder();
+            for (int i = 0; i < index; i++)
+            {
+                if (i == index) errorLine.Append("V");
+                else errorLine.Append("_");
+            }
+            ErrorBox.Text = errorLine.ToString();
         }
 
         #region numpad
